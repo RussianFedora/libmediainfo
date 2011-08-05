@@ -126,5 +126,5 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
-* Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.4.20-1.R
+* Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1.R
 - Initial release
