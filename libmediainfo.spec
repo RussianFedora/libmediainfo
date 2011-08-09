@@ -1,4 +1,4 @@
-Name:           libmediainfo0
+Name:           libmediainfo
 Version:        0.7.47
 Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
@@ -6,10 +6,10 @@ Summary:        Supplies technical and tag information about a video or audio fi
 Group:          System/Libraries
 License:        GPL
 URL:            http://mediainfo.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/mediainfo/libmediainfo_%{version}.tar.bz2
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}_%{version}.tar.bz2
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
-BuildRequires:  libzen0-devel >= 0.4.20
+BuildRequires:  libzen-devel >= 0.4.20
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen       
@@ -42,8 +42,8 @@ This package contains the shared library for MediaInfo.
 %package        devel
 Summary:        Include files and mandatory libraries for development
 Group:          Development/Libraries/C and C++
-Requires:       libmediainfo0 = %{version}-%{release}
-Requires:       libzen0-devel >= 0.4.20
+Requires:       %{name} = %{version}-%{release}
+Requires:       libzen-devel >= 0.4.20
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -104,16 +104,16 @@ popd
 %clean
 [ -d "%{buildroot}" -a "%{buildroot}" != "" ] && %__rm -rf "%{buildroot}"
 
-%post -n libmediainfo0 -p /sbin/ldconfig
+%post -n libmediainfo -p /sbin/ldconfig
 
-%postun -n libmediainfo0 -p /sbin/ldconfig
+%postun -n libmediainfo -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)
 %doc History.txt License.html ReadMe.txt
 %{_libdir}/libmediainfo.so.*
 
-%files -n libmediainfo0-devel
+%files    devel
 %defattr(-,root,root,-)
 %doc Changes.txt Documentation.html Doc Source/Example
 %dir %{_includedir}/MediaInfo
@@ -126,5 +126,8 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Aug 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-2.R
+- Removed 0 from name
+
 * Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1.R
 - Initial release
