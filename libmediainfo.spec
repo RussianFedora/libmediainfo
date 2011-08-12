@@ -12,7 +12,10 @@ BuildRequires:  gcc-c++
 BuildRequires:  libzen-devel >= 0.4.20
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
-BuildRequires:  doxygen       
+BuildRequires:  doxygen
+BuildRequires:  libtool
+BuildRequires:  automake
+BuildRequires:  autoconf       
 
 %description
 MediaInfo supplies technical and tag information about a video or
