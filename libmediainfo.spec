@@ -6,7 +6,7 @@ Summary:        Supplies technical and tag information about a video or audio fi
 Group:          System/Libraries
 License:        GPL
 URL:            http://mediainfo.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}_%{version}.tar.bz2
+Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
 BuildRequires:  libzen-devel >= 0.4.20
