@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.49
+Version:        0.7.50
 Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
 
@@ -9,13 +9,13 @@ URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
-BuildRequires:  libzen-devel >= 0.4.20
+BuildRequires:  libzen-devel >= 0.4.22
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen
 BuildRequires:  libtool
 BuildRequires:  automake
-BuildRequires:  autoconf       
+BuildRequires:  autoconf
 
 %description
 MediaInfo supplies technical and tag information about a video or
@@ -46,7 +46,7 @@ This package contains the shared library for MediaInfo.
 Summary:        Include files and mandatory libraries for development
 Group:          Development/Libraries/C and C++
 Requires:       %{name} = %{version}-%{release}
-Requires:       libzen-devel >= 0.4.20
+Requires:       libzen-devel >= 0.4.22
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -129,6 +129,9 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 27 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.50-1.R
+- Update to 0.7.50
+
 * Mon Sep 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.49-1.R
 - Update to 0.7.49
 
