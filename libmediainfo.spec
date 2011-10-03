@@ -3,7 +3,7 @@ Version:        0.7.50
 Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
 
-Group:          System/Libraries
+Group:          System Environment/Libraries
 License:        GPL
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
@@ -44,7 +44,7 @@ This package contains the shared library for MediaInfo.
 
 %package        devel
 Summary:        Include files and mandatory libraries for development
-Group:          Development/Libraries/C and C++
+Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
 Requires:       libzen-devel >= 0.4.22
 
