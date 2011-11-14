@@ -9,7 +9,7 @@ URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
-BuildRequires:  libzen-devel >= 0.4.22
+BuildRequires:  libzen-devel >= 0.4.23
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen
