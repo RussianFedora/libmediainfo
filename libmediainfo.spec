@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.50
+Version:        0.7.51
 Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
 
@@ -129,6 +129,9 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-1.R
+- Update to 0.7.51
+
 * Tue Sep 27 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.50-1.R
 - Update to 0.7.50
 
