@@ -1,7 +1,8 @@
 Name:           libmediainfo
 Version:        0.7.51
-Release:        1%{?dist}.R
+Release:        2%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
+Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
 Group:          System Environment/Libraries
 License:        GPL
@@ -42,14 +43,42 @@ What format (container) does MediaInfo support?
 
 This package contains the shared library for MediaInfo.
 
+%description -l ru
+MediaInfo предоставляет полную информацию о видео или аудио файле.
+
+Какая информация может быть получена MediaInfo?
+* Общее: title, author, director, album, track number, date, duration...
+* Видео: codec, aspect, fps, bitrate...
+* Аудио: codec, sample rate, channels, language, bitrate...
+* Текст: язык субтитров
+* Части: число частей, список частей
+
+DivX, XviD, H263, H.263, H264, x264, ASP, AVC, iTunes, MPEG-1,
+MPEG1, MPEG-2, MPEG2, MPEG-4, MPEG4, MP4, M4A, M4V, QuickTime,
+RealVideo, RealAudio, RA, RM, MSMPEG4v1, MSMPEG4v2, MSMPEG4v3,
+VOB, DVD, WMA, VMW, ASF, 3GP, 3GPP, 3GP2
+
+Какой формат (контейнер) поддерживает MediaInfo?
+* Видео: MKV, OGM, AVI, DivX, WMV, QuickTime, Real, MPEG-1,
+  MPEG-2, MPEG-4, DVD (VOB) (Codecs: DivX, XviD, MSMPEG4, ASP,
+  H.264, AVC...)
+* Аудио: OGG, MP3, WAV, RA, AC3, DTS, AAC, M4A, AU, AIFF
+* Субтитры: SRT, SSA, ASS, SAMI
+
+Данный пакет содержит разделяемую библиотеку для MediaInfo.
+
 %package        devel
 Summary:        Include files and mandatory libraries for development
+Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:       libzen-devel >= 0.4.22
+Requires:       libzen-devel >= 0.4.23
 
 %description    devel
 Include files and mandatory libraries for development.
+
+%description    devel -l ru
+Файлы для разработки %{name}.
 
 %prep
 %setup -q -n MediaInfoLib
@@ -129,6 +158,9 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-2.R
+- Added description in russian language
+
 * Mon Nov 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-1.R
 - Update to 0.7.51
 
