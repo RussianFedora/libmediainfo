@@ -1,6 +1,6 @@
 Name:           libmediainfo
-Version:        0.7.51
-Release:        2%{?dist}.R
+Version:        0.7.52
+Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
@@ -8,6 +8,8 @@ Group:          System Environment/Libraries
 License:        GPL
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
+Source100:      README.RFRemix
+
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
 BuildRequires:  libzen-devel >= 0.4.23
@@ -147,7 +149,7 @@ popd
 
 %files    devel
 %defattr(-,root,root,-)
-%doc Changes.txt Documentation.html Doc Source/Example
+%doc Changes.txt Documentation.html Doc Source/Example README.RFRemix
 %dir %{_includedir}/MediaInfo
 %{_includedir}/MediaInfo/*
 %dir %{_includedir}/MediaInfoDLL
@@ -158,6 +160,9 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.52-1.R
+- Update to 0.7.52
+
 * Tue Nov 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-2.R
 - Added description in russian language
 
