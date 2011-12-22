@@ -109,6 +109,8 @@ pushd Project/GNU/Library
     %__make %{?jobs:-j%{jobs}}
 popd
 
+cp %{SOURCE100} .
+
 %install
 pushd Project/GNU/Library/
     %__make install-strip DESTDIR=%{buildroot}
