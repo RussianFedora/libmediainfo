@@ -102,8 +102,7 @@ cp Source/Doc/*.html ./
 pushd Project/GNU/Library
     %__chmod +x autogen
     ./autogen
-    %configure --enable-shared --disable-libcurl --disable-libmms \
-    --enable-visibility
+    %configure --enable-shared --disable-libcurl --disable-libmms --enable-visibility --disable-static
 
     make %{?_smp_mflags}
 popd
@@ -130,11 +129,9 @@ popd
 %__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
 %__install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
 
-%__sed -i -e 's|Version: |Version: %{version}|g' \
-    Project/GNU/Library/libmediainfo.pc
+%__sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
 %__install -dm 755 %{buildroot}%{_libdir}/pkgconfig
-%__install -m 644 Project/GNU/Library/libmediainfo.pc \
-    %{buildroot}%{_libdir}/pkgconfig
+%__install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
 
 rm -f %{buildroot}%{_libdir}/%{name}.*a
 
@@ -151,10 +148,8 @@ rm -f %{buildroot}%{_libdir}/%{name}.*a
 %files    devel
 %defattr(-,root,root,-)
 %doc Changes.txt Documentation.html Doc Source/Example README.RFRemix
-%dir %{_includedir}/MediaInfo
-%{_includedir}/MediaInfo/*
-%dir %{_includedir}/MediaInfoDLL
-%{_includedir}/MediaInfoDLL/*
+%{_includedir}/MediaInfo
+%{_includedir}/MediaInfoDLL
 %{_libdir}/libmediainfo.so
 %{_libdir}/pkgconfig/*.pc
 
