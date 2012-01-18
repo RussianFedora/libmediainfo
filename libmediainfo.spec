@@ -105,15 +105,14 @@ pushd Project/GNU/Library
     %configure --enable-shared --disable-libcurl --disable-libmms \
     --enable-visibility
 
-    %__make clean
-    %__make %{?jobs:-j%{jobs}}
+    make %{?_smp_mflags}
 popd
 
 cp %{SOURCE100} .
 
 %install
 pushd Project/GNU/Library/
-    %__make install-strip DESTDIR=%{buildroot}
+    make install DESTDIR=%{buildroot}
 popd
 
 # MediaInfoDLL headers and MediaInfo-config
@@ -139,8 +138,6 @@ popd
 
 rm -f %{buildroot}%{_libdir}/%{name}.*a
 
-%clean
-[ -d "%{buildroot}" -a "%{buildroot}" != "" ] && %__rm -rf "%{buildroot}"
 
 %post -n libmediainfo -p /sbin/ldconfig
 
