@@ -74,7 +74,7 @@ Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       libzen-devel >= 0.4.23
+Requires:       libzen-devel%{?_isa} >= 0.4.23
 
 %description    devel
 Include files and mandatory libraries for development.
