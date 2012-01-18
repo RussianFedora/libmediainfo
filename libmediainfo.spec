@@ -73,7 +73,7 @@ VOB, DVD, WMA, VMW, ASF, 3GP, 3GPP, 3GP2
 Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       libzen-devel >= 0.4.23
 
 %description    devel
@@ -137,6 +137,8 @@ popd
 %__install -m 644 Project/GNU/Library/libmediainfo.pc \
     %{buildroot}%{_libdir}/pkgconfig
 
+rm -f %{buildroot}%{_libdir}/%{name}.*a
+
 %clean
 [ -d "%{buildroot}" -a "%{buildroot}" != "" ] && %__rm -rf "%{buildroot}"
 
@@ -156,8 +158,6 @@ popd
 %{_includedir}/MediaInfo/*
 %dir %{_includedir}/MediaInfoDLL
 %{_includedir}/MediaInfoDLL/*
-%{_libdir}/libmediainfo.a
-%{_libdir}/libmediainfo.la
 %{_libdir}/libmediainfo.so
 %{_libdir}/pkgconfig/*.pc
 
