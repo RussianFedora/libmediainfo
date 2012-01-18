@@ -5,7 +5,7 @@ Summary:        Supplies technical and tag information about a video or audio fi
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
 Group:          System Environment/Libraries
-License:        GPL
+License:        LGPLv3+ with exceptions
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 Source100:      README.RFRemix
