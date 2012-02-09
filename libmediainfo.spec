@@ -5,7 +5,7 @@ Summary:        Supplies technical and tag information about a video or audio fi
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
 Group:          System Environment/Libraries
-License:        GPL
+License:        LGPLv3+ with exceptions
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 Source100:      README.RFRemix
@@ -74,7 +74,7 @@ Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:       libzen-devel >= 0.4.24
+Requires:       libzen-devel%{?_isa} >= 0.4.24
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -102,18 +102,16 @@ cp Source/Doc/*.html ./
 pushd Project/GNU/Library
     %__chmod +x autogen
     ./autogen
-    %configure --enable-shared --disable-libcurl --disable-libmms \
-    --enable-visibility
+    %configure --enable-shared --disable-libcurl --disable-libmms --enable-visibility --disable-static
 
-    %__make clean
-    %__make %{?jobs:-j%{jobs}}
+    make %{?_smp_mflags}
 popd
 
 cp %{SOURCE100} .
 
 %install
 pushd Project/GNU/Library/
-    %__make install-strip DESTDIR=%{buildroot}
+    make install DESTDIR=%{buildroot}
 popd
 
 # MediaInfoDLL headers and MediaInfo-config
@@ -131,14 +129,12 @@ popd
 %__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
 %__install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
 
-%__sed -i -e 's|Version: |Version: %{version}|g' \
-    Project/GNU/Library/libmediainfo.pc
+%__sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
 %__install -dm 755 %{buildroot}%{_libdir}/pkgconfig
-%__install -m 644 Project/GNU/Library/libmediainfo.pc \
-    %{buildroot}%{_libdir}/pkgconfig
+%__install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
 
-%clean
-[ -d "%{buildroot}" -a "%{buildroot}" != "" ] && %__rm -rf "%{buildroot}"
+rm -f %{buildroot}%{_libdir}/%{name}.*a
+
 
 %post -n libmediainfo -p /sbin/ldconfig
 
@@ -152,12 +148,8 @@ popd
 %files    devel
 %defattr(-,root,root,-)
 %doc Changes.txt Documentation.html Doc Source/Example README.RFRemix
-%dir %{_includedir}/MediaInfo
-%{_includedir}/MediaInfo/*
-%dir %{_includedir}/MediaInfoDLL
-%{_includedir}/MediaInfoDLL/*
-%{_libdir}/libmediainfo.a
-%{_libdir}/libmediainfo.la
+%{_includedir}/MediaInfo
+%{_includedir}/MediaInfoDLL
 %{_libdir}/libmediainfo.so
 %{_libdir}/pkgconfig/*.pc
 
