@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.52
+Version:        0.7.53
 Release:        1%{?dist}.R
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
@@ -12,7 +12,7 @@ Source100:      README.RFRemix
 
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
-BuildRequires:  libzen-devel >= 0.4.23
+BuildRequires:  libzen-devel >= 0.4.24
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen
@@ -74,7 +74,7 @@ Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:       libzen-devel >= 0.4.23
+Requires:       libzen-devel >= 0.4.24
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -162,6 +162,9 @@ popd
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Feb 09 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.53-1.R
+- Update to 0.7.53
+
 * Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.52-1.R
 - Update to 0.7.52
 
