@@ -1,6 +1,6 @@
 Name:           libmediainfo
 Version:        0.7.53
-Release:        1%{?dist}.R
+Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
