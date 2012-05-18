@@ -73,7 +73,7 @@ VOB, DVD, WMA, VMW, ASF, 3GP, 3GPP, 3GP2
 Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       libzen-devel%{?_isa} >= 0.4.26
 
 %description    devel
