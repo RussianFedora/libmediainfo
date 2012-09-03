@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.58
+Version:        0.7.60
 Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
@@ -8,11 +8,10 @@ Group:          System Environment/Libraries
 License:        LGPLv3+ with exceptions
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
-Source100:      README.RFRemix
 
 BuildRequires:  dos2unix
 BuildRequires:  gcc-c++
-BuildRequires:  libzen-devel >= 0.4.26
+BuildRequires:  libzen-devel >= 0.4.28
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen
@@ -74,7 +73,7 @@ Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       libzen-devel%{?_isa} >= 0.4.26
+Requires:       libzen-devel%{?_isa} >= 0.4.28
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -106,8 +105,6 @@ pushd Project/GNU/Library
 
     make %{?_smp_mflags}
 popd
-
-cp %{SOURCE100} .
 
 %install
 pushd Project/GNU/Library/
@@ -141,19 +138,20 @@ rm -f %{buildroot}%{_libdir}/%{name}.*a
 %postun -n libmediainfo -p /sbin/ldconfig
 
 %files
-%defattr(-,root,root,-)
 %doc History.txt License.html ReadMe.txt
 %{_libdir}/libmediainfo.so.*
 
 %files    devel
-%defattr(-,root,root,-)
-%doc Changes.txt Documentation.html Doc Source/Example README.RFRemix
+%doc Changes.txt Documentation.html Doc Source/Example
 %{_includedir}/MediaInfo
 %{_includedir}/MediaInfoDLL
 %{_libdir}/libmediainfo.so
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Sep 03 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.60-1.R
+- Update to 0.7.60
+
 * Tue Jun 05 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.58-1.R
 - Update to 0.7.58
 
