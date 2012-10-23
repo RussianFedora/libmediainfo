@@ -149,7 +149,7 @@ rm -f %{buildroot}%{_libdir}/%{name}.*a
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
-* Tue Oct 03 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.61-1.R
+* Tue Oct 23 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.61-1.R
 - Update to 0.7.61
 
 * Mon Sep 03 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.60-1.R
