@@ -1,6 +1,6 @@
 Name:           libmediainfo
 Version:        0.7.62
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
@@ -9,8 +9,6 @@ License:        LGPLv3+ with exceptions
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 
-BuildRequires:  dos2unix
-BuildRequires:  gcc-c++
 BuildRequires:  libzen-devel >= 0.4.28
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
@@ -18,6 +16,7 @@ BuildRequires:  doxygen
 BuildRequires:  libtool
 BuildRequires:  automake
 BuildRequires:  autoconf
+BuildRequires:  libcurl-devel
 
 %description
 MediaInfo supplies technical and tag information about a video or
@@ -85,13 +84,19 @@ Include files and mandatory libraries for development.
 %setup -q -n MediaInfoLib
 cp           Release/ReadMe_DLL_Linux.txt ReadMe.txt
 mv           History_DLL.txt History.txt
-dos2unix     *.txt *.html Source/Doc/*.html
-%__chmod 644 *.txt *.html Source/Doc/*.html
+sed -i 's/.$//' *.txt Source/Example/* 
+
+find Source -type f -exec chmod 644 {} ';'
+chmod 644 *.txt License.html
+
+pushd Project/GNU/Library
+    autoreconf -i
+popd
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
-export CPPFLAGS="$RPM_OPT_FLAGS"
-export CXXFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS="%{optflags}"
+export CPPFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
 
 pushd Source/Doc/
     doxygen Doxyfile
@@ -99,9 +104,7 @@ popd
 cp Source/Doc/*.html ./
 
 pushd Project/GNU/Library
-    %__chmod +x autogen
-    ./autogen
-    %configure --enable-shared --disable-libcurl --disable-libmms --enable-visibility --disable-static
+    %configure --enable-shared --disable-static --with-libcurl --enable-visibility
 
     make %{?_smp_mflags}
 popd
@@ -112,87 +115,94 @@ pushd Project/GNU/Library/
 popd
 
 # MediaInfoDLL headers and MediaInfo-config
-%__install -dm 755 %{buildroot}%{_includedir}/MediaInfo
-%__install -m 644 Source/MediaInfo/MediaInfo.h %{buildroot}%{_includedir}/MediaInfo
-%__install -m 644 Source/MediaInfo/MediaInfoList.h %{buildroot}%{_includedir}/MediaInfo
-%__install -m 644 Source/MediaInfo/MediaInfo_Const.h %{buildroot}%{_includedir}/MediaInfo
-%__install -m 644 Source/MediaInfo/MediaInfo_Events.h %{buildroot}%{_includedir}/MediaInfo
-%__install -dm 755 %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.h %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL_Static.h %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNA.java %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNative.java %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
-%__install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
+install -dm 755 %{buildroot}%{_includedir}/MediaInfo
+install -m 644 Source/MediaInfo/MediaInfo.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 Source/MediaInfo/MediaInfoList.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 Source/MediaInfo/MediaInfo_Const.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 Source/MediaInfo/MediaInfo_Events.h %{buildroot}%{_includedir}/MediaInfo
+install -dm 755 %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.h %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL_Static.h %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNA.java %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNative.java %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
 
-%__sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
-%__install -dm 755 %{buildroot}%{_libdir}/pkgconfig
-%__install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
+sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
+install -dm 755 %{buildroot}%{_libdir}/pkgconfig
+install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
 
-rm -f %{buildroot}%{_libdir}/%{name}.*a
+rm -f %{buildroot}%{_libdir}/%{name}.la
 
 
-%post -n libmediainfo -p /sbin/ldconfig
+%post -n %{name} -p /sbin/ldconfig
 
-%postun -n libmediainfo -p /sbin/ldconfig
+%postun -n %{name} -p /sbin/ldconfig
 
 %files
 %doc History.txt License.html ReadMe.txt
-%{_libdir}/libmediainfo.so.*
+%{_libdir}/%{name}.so.*
 
 %files    devel
 %doc Changes.txt Documentation.html Doc Source/Example
 %{_includedir}/MediaInfo
 %{_includedir}/MediaInfoDLL
-%{_libdir}/libmediainfo.so
+%{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
-* Wed Mar 20 2013 Vasiliy N. Glazov <vascom2@gmail.com> - 0.7.62-1.R
+* Tue Apr 23 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.62-2
+- Corrected shebang
+- Removed dos2unix from BR
+- Correcting encoding for all files
+- Corrected config and build
+- Enable curl support
+
+* Wed Mar 20 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.62-1
 - update to 0.7.62
 
-* Tue Oct 23 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.61-1.R
+* Tue Oct 23 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.61-1
 - Update to 0.7.61
 
-* Mon Sep 03 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.60-1.R
+* Mon Sep 03 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.60-1
 - Update to 0.7.60
 
-* Tue Jun 05 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.58-1.R
+* Tue Jun 05 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.58-1
 - Update to 0.7.58
 
-* Fri May 04 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.57-1.R
+* Fri May 04 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.57-1
 - Update to 0.7.57
 
-* Wed Apr 11 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.56-1.R
+* Wed Apr 11 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.56-1
 - Update to 0.7.56
 
-* Tue Mar 20 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.54-1.R
+* Tue Mar 20 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.54-1
 - Update to 0.7.54
 
-* Thu Feb 09 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.53-1.R
+* Thu Feb 09 2012 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.53-1
 - Update to 0.7.53
 
-* Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.52-1.R
+* Thu Dec 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.52-1
 - Update to 0.7.52
 
-* Tue Nov 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-2.R
+* Tue Nov 22 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-2
 - Added description in russian language
 
-* Mon Nov 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-1.R
+* Mon Nov 14 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.51-1
 - Update to 0.7.51
 
-* Tue Sep 27 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.50-1.R
+* Tue Sep 27 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.50-1
 - Update to 0.7.50
 
-* Mon Sep 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.49-1.R
+* Mon Sep 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.49-1
 - Update to 0.7.49
 
-* Fri Aug 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.48-1.R
+* Fri Aug 19 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.48-1
 - Update to 0.7.48
 
-* Tue Aug 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-2.R
+* Tue Aug 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-2
 - Removed 0 from name
 
-* Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1.R
+* Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1
 - Initial release
