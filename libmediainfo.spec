@@ -1,6 +1,6 @@
 Name:           libmediainfo
-Version:        0.7.62
-Release:        2%{?dist}
+Version:        0.7.63
+Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
@@ -9,7 +9,7 @@ License:        LGPLv3+ with exceptions
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 
-BuildRequires:  libzen-devel >= 0.4.28
+BuildRequires:  libzen-devel >= 0.4.29
 BuildRequires:  pkgconfig
 BuildRequires:  zlib-devel
 BuildRequires:  doxygen
@@ -72,7 +72,7 @@ Summary:        Include files and mandatory libraries for development
 Summary(ru):    Пакет с файлами для разработки %{name}
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       libzen-devel%{?_isa} >= 0.4.28
+Requires:       libzen-devel%{?_isa} >= 0.4.29
 
 %description    devel
 Include files and mandatory libraries for development.
@@ -86,8 +86,7 @@ cp           Release/ReadMe_DLL_Linux.txt ReadMe.txt
 mv           History_DLL.txt History.txt
 sed -i 's/.$//' *.txt Source/Example/* 
 
-find Source -type f -exec chmod 644 {} ';'
-chmod 644 *.txt License.html
+find . -type f -exec chmod 644 {} ';'
 
 pushd Project/GNU/Library
     autoreconf -i
@@ -99,6 +98,7 @@ export CPPFLAGS="%{optflags}"
 export CXXFLAGS="%{optflags}"
 
 pushd Source/Doc/
+    doxygen -u Doxyfile
     doxygen Doxyfile
 popd
 cp Source/Doc/*.html ./
@@ -152,8 +152,10 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri May 31 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.63-1
+- update to 0.7.63
+
 * Tue Apr 23 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.62-2
-- Corrected shebang
 - Removed dos2unix from BR
 - Correcting encoding for all files
 - Corrected config and build
