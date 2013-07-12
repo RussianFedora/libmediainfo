@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.63
+Version:        0.7.64
 Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
@@ -152,6 +152,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 12 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.64-1
+- update to 0.7.64
+
 * Fri May 31 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.63-1
 - update to 0.7.63
 
