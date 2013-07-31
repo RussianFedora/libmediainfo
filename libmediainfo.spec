@@ -1,6 +1,6 @@
 Name:           libmediainfo
 Version:        0.7.64
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
@@ -93,10 +93,6 @@ pushd Project/GNU/Library
 popd
 
 %build
-export CFLAGS="%{optflags}"
-export CPPFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-
 pushd Source/Doc/
     doxygen -u Doxyfile
     doxygen Doxyfile
@@ -105,13 +101,12 @@ cp Source/Doc/*.html ./
 
 pushd Project/GNU/Library
     %configure --enable-shared --disable-static --with-libcurl --enable-visibility
-
     make %{?_smp_mflags}
 popd
 
 %install
 pushd Project/GNU/Library/
-    make install DESTDIR=%{buildroot}
+    %make_install
 popd
 
 # MediaInfoDLL headers and MediaInfo-config
@@ -152,6 +147,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Wed Jul 31 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.64-3
+- Corrected make flags and use install macros
+
 * Tue Jul 30 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.64-2
 - just rebuild
 
@@ -212,5 +210,5 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 * Tue Aug 09 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-2
 - Removed 0 from name
 
-* Thu Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1
+* Fri Aug 05 2011 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.47-1
 - Initial release
