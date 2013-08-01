@@ -5,7 +5,7 @@ Summary:        Supplies technical and tag information about a video or audio fi
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
 Group:          System Environment/Libraries
-License:        LGPLv3+ with exceptions
+License:        BSD
 URL:            http://mediainfo.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/mediainfo/%{name}_%{version}.tar.bz2
 
