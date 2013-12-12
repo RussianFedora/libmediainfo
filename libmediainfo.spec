@@ -104,7 +104,13 @@ popd
 cp Source/Doc/*.html ./
 
 pushd Project/GNU/Library
-    %configure --enable-shared --disable-static --with-libcurl --enable-visibility
+    %configure  --enable-shared \
+                --disable-static \
+                --with-libcurl \
+                --enable-visibility \
+                --with-libtinyxml2 \
+                PKG_CONFIG=/usr/bin/pkg-config
+                #--with-libmd5 \
     make %{?_smp_mflags}
 popd
 
