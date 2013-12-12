@@ -1,6 +1,6 @@
 Name:           libmediainfo
-Version:        0.7.64
-Release:        3%{?dist}
+Version:        0.7.65
+Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
 
@@ -17,6 +17,7 @@ BuildRequires:  libtool
 BuildRequires:  automake
 BuildRequires:  autoconf
 BuildRequires:  libcurl-devel
+BuildRequires:  tinyxml2-devel
 
 %description
 MediaInfo supplies technical and tag information about a video or
@@ -92,6 +93,9 @@ pushd Project/GNU/Library
     autoreconf -i
 popd
 
+rm -rf Project/MSCS20*
+rm -rf Source/ThirdParty/tinyxml2
+
 %build
 pushd Source/Doc/
     doxygen -u Doxyfile
@@ -131,9 +135,9 @@ install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgcon
 rm -f %{buildroot}%{_libdir}/%{name}.la
 
 
-%post -n %{name} -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n %{name} -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc History.txt License.html ReadMe.txt
@@ -147,6 +151,12 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Dec 12 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.65-1
+- Update to 0.7.65
+
+* Sat Nov 02 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.64-4
+- Some small corrections in spec
+
 * Wed Jul 31 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.64-3
 - Corrected make flags and use install macros
 
