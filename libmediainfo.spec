@@ -1,5 +1,5 @@
 Name:           libmediainfo
-Version:        0.7.65
+Version:        0.7.67
 Release:        1%{?dist}
 Summary:        Supplies technical and tag information about a video or audio file
 Summary(ru):    Предоставляет полную информацию о видео или аудио файле
@@ -89,12 +89,12 @@ sed -i 's/.$//' *.txt Source/Example/*
 
 find . -type f -exec chmod 644 {} ';'
 
+rm -rf Project/MSCS20*
+rm -rf Source/ThirdParty/tinyxml2
+
 pushd Project/GNU/Library
     autoreconf -i
 popd
-
-rm -rf Project/MSCS20*
-rm -rf Source/ThirdParty/tinyxml2
 
 %build
 pushd Source/Doc/
@@ -121,22 +121,22 @@ popd
 
 # MediaInfoDLL headers and MediaInfo-config
 install -dm 755 %{buildroot}%{_includedir}/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfo.h %{buildroot}%{_includedir}/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfoList.h %{buildroot}%{_includedir}/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfo_Const.h %{buildroot}%{_includedir}/MediaInfo
-install -m 644 Source/MediaInfo/MediaInfo_Events.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 -p Source/MediaInfo/MediaInfo.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 -p Source/MediaInfo/MediaInfoList.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 -p Source/MediaInfo/MediaInfo_Const.h %{buildroot}%{_includedir}/MediaInfo
+install -m 644 -p Source/MediaInfo/MediaInfo_Events.h %{buildroot}%{_includedir}/MediaInfo
 install -dm 755 %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.cs %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.h %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL_Static.h %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNA.java %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.JNative.java %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
-install -m 644 Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL.cs %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL.h %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL_Static.h %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL.JNA.java %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL.JNative.java %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL.py %{buildroot}%{_includedir}/MediaInfoDLL
+install -m 644 -p Source/MediaInfoDLL/MediaInfoDLL3.py %{buildroot}%{_includedir}/MediaInfoDLL
 
 sed -i -e 's|Version: |Version: %{version}|g' Project/GNU/Library/libmediainfo.pc
 install -dm 755 %{buildroot}%{_libdir}/pkgconfig
-install -m 644 Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
+install -m 644 -p Project/GNU/Library/libmediainfo.pc %{buildroot}%{_libdir}/pkgconfig
 
 rm -f %{buildroot}%{_libdir}/%{name}.la
 
@@ -157,6 +157,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Feb 21 2014 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.67-1
+- Update to 0.7.67
+
 * Thu Dec 12 2013 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.65-1
 - Update to 0.7.65
 
