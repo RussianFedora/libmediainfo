@@ -1,8 +1,8 @@
 Name:           libmediainfo
 Version:        0.7.67
-Release:        1%{?dist}
-Summary:        Supplies technical and tag information about a video or audio file
-Summary(ru):    Предоставляет полную информацию о видео или аудио файле
+Release:        2%{?dist}
+Summary:        Library for supplies technical and tag information about a video or audio file
+Summary(ru):    Библиотека для предоставления полной информации о видео или аудио файле
 
 Group:          System Environment/Libraries
 License:        BSD
@@ -19,7 +19,10 @@ BuildRequires:  autoconf
 BuildRequires:  libcurl-devel
 BuildRequires:  tinyxml2-devel
 
+Provides:       bundled(md5-plumb)
+
 %description
+This package contains the shared library for MediaInfo.
 MediaInfo supplies technical and tag information about a video or
 audio file.
 
@@ -42,9 +45,9 @@ What format (container) does MediaInfo support?
 * Audio: OGG, MP3, WAV, RA, AC3, DTS, AAC, M4A, AU, AIFF
 * Subtitles: SRT, SSA, ASS, SAMI
 
-This package contains the shared library for MediaInfo.
 
 %description -l ru
+Данный пакет содержит разделяемую библиотеку для MediaInfo.
 MediaInfo предоставляет полную информацию о видео или аудио файле.
 
 Какая информация может быть получена MediaInfo?
@@ -66,7 +69,6 @@ VOB, DVD, WMA, VMW, ASF, 3GP, 3GPP, 3GP2
 * Аудио: OGG, MP3, WAV, RA, AC3, DTS, AAC, M4A, AU, AIFF
 * Субтитры: SRT, SSA, ASS, SAMI
 
-Данный пакет содержит разделяемую библиотеку для MediaInfo.
 
 %package        devel
 Summary:        Include files and mandatory libraries for development
@@ -85,15 +87,18 @@ Include files and mandatory libraries for development.
 %setup -q -n MediaInfoLib
 cp           Release/ReadMe_DLL_Linux.txt ReadMe.txt
 mv           History_DLL.txt History.txt
-sed -i 's/.$//' *.txt Source/Example/* 
+sed -i 's/.$//' *.txt Source/Example/*
 
 find . -type f -exec chmod 644 {} ';'
 
 rm -rf Project/MSCS20*
 rm -rf Source/ThirdParty/tinyxml2
 
+#https://fedorahosted.org/FedoraReview/wiki/AutoTools
+sed -i 's/AC_PROG_LIBTOOL/LT_INIT/' Project/GNU/Library/configure.ac
+
 pushd Project/GNU/Library
-    autoreconf -i
+    autoreconf -fiv
 popd
 
 %build
@@ -110,7 +115,6 @@ pushd Project/GNU/Library
                 --enable-visibility \
                 --with-libtinyxml2 \
                 PKG_CONFIG=/usr/bin/pkg-config
-                #--with-libmd5 \
     make %{?_smp_mflags}
 popd
 
@@ -157,6 +161,11 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Feb 24 2014 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.67-2
+- Correct description and summary
+- Added provides for md5
+- Corrected obsolete m4 macros
+
 * Fri Feb 21 2014 Vasiliy N. Glazov <vascom2@gmail.com> 0.7.67-1
 - Update to 0.7.67
 
